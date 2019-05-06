@@ -30,7 +30,8 @@ class Dijkstra():
     def caminoCorto(self, nodo):
 
         min(RED[nodo])
-        for i in range()
+        for i in range():
+            pass
 
 
 
