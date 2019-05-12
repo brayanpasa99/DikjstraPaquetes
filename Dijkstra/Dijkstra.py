@@ -1,5 +1,15 @@
+import copy
+
 INF = float('inf')
 RED =   [[INF, 15 , INF, 5  , INF, INF, INF],
+        [15  , INF, 61 , INF, 21 , INF, INF],
+        [INF , 61 , INF, 8  , INF, INF, INF],
+        [5   , INF, 8  , INF, INF, INF, 7  ],
+        [INF , 21 , INF, INF, INF, 17 , 34 ],
+        [INF , INF, INF, INF, 17 , INF, 82 ],
+        [INF , INF, INF, 7  , 34 , 82 , INF]]
+
+RED_ORI =   [[INF, 15 , INF, 5  , INF, INF, INF],
         [15  , INF, 61 , INF, 21 , INF, INF],
         [INF , 61 , INF, 8  , INF, INF, INF],
         [5   , INF, 8  , INF, INF, INF, 7  ],
@@ -55,6 +65,7 @@ class Dijkstra():
         print 'Envio de nodo', VERTICES[nodoOrigen], 'a', VERTICES[nodoFin]
         print ''
         while (nodoOrigen is not nodoFin):
+
             ponderado = [nodoOrigen, valAcomulado]
             ponderadoPr = [VERTICES[nodoOrigen], valAcomulado]
             print'Ponderado:', ponderadoPr
@@ -80,17 +91,58 @@ class Dijkstra():
                 print 'El nodo siguiente ya fue visitado ', k, 'veces'
                 print 'Nodo actual:', VERTICES[nodoOrigen]
                 print 'Nodo anterior:', VERTICES[nodoAnterior]
+
+                print 'Nodo siguiente:', nodoSiguiente
+                print 'Nodo anterior:',nodoAnterior
+
                 valAux = RED[nodoOrigen][nodoSiguiente]
-                print 'Valor de la matriz: ', valAux
+                valAuxi = RED[nodoOrigen][nodoAnterior]
+
+                print 'Fila:', RED[nodoOrigen]
+
                 RED[nodoOrigen][nodoAnterior] = INF
                 RED[nodoOrigen][nodoSiguiente] = INF
+
+                print 'Nueva fila:', RED[nodoOrigen]
+
                 minAdy = min(RED[nodoOrigen])
-                RED[nodoOrigen][nodoAnterior] = valAux
+                RED[nodoOrigen][nodoSiguiente] = valAux
+                RED[nodoOrigen][nodoAnterior] = valAuxi
                 print 'Nuevo valor minimo adyacente:', minAdy
                 nodoSiguiente = self.buscar(RED[nodoOrigen], minAdy)
                 nodoSiguientePr = VERTICES[nodoSiguiente]
                 print 'Siguiente nodo:', nodoSiguientePr
                 print ''
+
+            if self.buscarVisitados(visitados,nodoSiguiente):
+                print 'El nodo ya se ha visitado antes...'
+                valAux = RED[nodoOrigen][nodoSiguiente]
+                valAuxi = RED[nodoOrigen][nodoAnterior]
+
+                RED[nodoOrigen][nodoSiguiente] = INF
+                RED[nodoOrigen][nodoAnterior] = INF
+
+                minAdy = min(RED[nodoOrigen])
+
+                if minAdy == INF:
+                    print 'Todos los vertices adyacentes han sido visitados...'
+                    print 'Reestableciendo la fila:', nodoOrigen
+                    RED[nodoOrigen] = RED_ORI[nodoOrigen][:]
+
+                    minAdy = min(RED[nodoOrigen])
+                    print 'Nuevo valor minimo adyacente:', minAdy
+
+
+                RED[nodoOrigen][nodoSiguiente] = valAux
+                RED[nodoOrigen][nodoAnterior] = valAuxi
+                print 'Fila de la red: ', RED[nodoOrigen]
+
+                nodoSiguiente = self.buscar(RED[nodoOrigen], minAdy)
+
+                nodoSiguientePr = VERTICES[nodoSiguiente]
+                print 'Siguiente nodo:', nodoSiguientePr
+                print ''
+
 
             valAcomulado = valAcomulado + minAdy
 
@@ -126,6 +178,10 @@ class Dijkstra():
             if lista[i] == val:
                 return i
 
+    def buscarVisitados(self, lista, val):
+        for i in range(len(lista)):
+            if lista[i] == val:
+                return True
 
 
 
