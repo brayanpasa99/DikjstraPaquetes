@@ -5,7 +5,7 @@ INF = float('inf')
         [5   , INF, 8  , 0, INF, INF, 7  ],
         [INF , 21 , INF, INF, 0, 17 , 34 ],
         [INF , INF, INF, INF, 17 , 0, 82 ],
-        [INF , INF, INF, 7  , 34 , 82 , 0]]'''
+        [INF , INF, INF, 7  , 34 , 82 , 0]]''' ##HOLa
 
 RED = [[INF, 15, INF, 5, INF, INF, INF],
        [15, INF, 61, INF, 21, INF, INF],
