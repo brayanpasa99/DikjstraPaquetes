@@ -10,7 +10,7 @@ RED = [[0, 15, INF, 5, INF, INF, INF],
         [INF, INF, INF, 7, 34, 82, 0]]
 
 class Dijkstra():
-
+    
     def __init__(self):
         pass
 
