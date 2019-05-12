@@ -1,140 +1,74 @@
 INF = float('inf')
-RED =   [[INF, 15 , INF, 5  , INF, INF, INF],
-        [15  , INF, 61 , INF, 21 , INF, INF],
-        [INF , 61 , INF, 8  , INF, INF, INF],
-        [5   , INF, 8  , INF, INF, INF, 7  ],
-        [INF , 21 , INF, INF, INF, 17 , 34 ],
-        [INF , INF, INF, INF, 17 , INF, 82 ],
-        [INF , INF, INF, 7  , 34 , 82 , INF]]
+'''RED =   [[0, 15 , INF, 5  , INF, INF, INF],
+        [15  , 0, 61 , INF, 21 , INF, INF],
+        [INF , 61 , 0, 8  , INF, INF, INF],
+        [5   , INF, 8  , 0, INF, INF, 7  ],
+        [INF , 21 , INF, INF, 0, 17 , 34 ],
+        [INF , INF, INF, INF, 17 , 0, 82 ],
+        [INF , INF, INF, 7  , 34 , 82 , 0]]'''
 
-VERTICES = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-VIS = {"A": False, "B": False, "C": False, "D": False, "E": False, "F": False, "G": False}
+RED = [[INF, 15, INF, 5, INF, INF, INF],
+       [15, INF, 61, INF, 21, INF, INF],
+       [INF, 61, INF, 8, INF, INF, INF],
+       [5, INF, 8, INF, INF, INF, 7],
+       [INF, 21, INF, INF, INF, 17, 34],
+       [INF, INF, INF, INF, 17, INF, 82],
+       [INF, INF, INF, 7, 34, 82, INF]]
+
+VIS = {'A': False, 'B': False, 'C': False, 'D': False, 'E': False, 'F': False, 'G': False}
+VER = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6}
+VERTICES = ["A", "B", "C", "D", "E", "F", "G"]
+
 
 class Dijkstra():
+    etiquetas = []
+    definitivos = []
+    l = 0
 
-    def __init__(self, origen, fin, paquetes):
-        self.__nodoOrigen = origen
-        self.__nodoFin = fin
-        self.__subCadenas = paquetes
+    def __init__(self):
+        pass
 
-    def envio(self, origen, fin, paquetes):
+    def primerPaso(self, ori, fin):
+        self.definitivos.append(ori)
+        VIS[ori] = True
 
-        posicionOrigen = self.buscarLetra(VERTICES, origen)
-        posicionDestino = self.buscarLetra(VERTICES, fin)
+        self.Algoritmo(ori, fin, 0, 0)
 
-        print ''
-        print 'Posicion del Computador de origen en la Matriz de Adyacencia:', posicionOrigen
-        print 'Posicion del Computador de destino en la Matriz de Adyacencia:', posicionDestino
+    def Algoritmo(self, ori, fin, distancia, paso):
 
-        self.__nodos = []
+        while(paso < 3):
 
-        for i in range(0, len(self.__subCadenas)):
-            self.__nodos.append(VIS)
+            for i in range(0, len(RED)):
+                if RED[VER[ori]][i] != INF:
+                    if VIS[VERTICES[i]]:
+                        pass
+                    else:
+                        self.etiquetas.append([RED[VER[ori]][i]+distancia, VERTICES[i]])
 
-        for i in range(0, len(self.__subCadenas)):
+            menor = min(self.etiquetas)
 
-            if (posicionOrigen == posicionDestino):
-                print ''
-                print 'El nodo origen es igual al nodo destino...'
-            else:
-                print ''
-                print 'Envio de la subcadena:', self.__subCadenas[i]
-                self.caminoCorto(posicionOrigen, posicionDestino)
+            distancia += menor[0]
+            VIS[menor[1]] = True
 
+            self.definitivos.append(menor[1])
 
-    def caminoCorto(self, nodoOrigen, nodoFin):
+            for i in range(0, len(self.etiquetas)):
+                if self.etiquetas[i] == menor:
+                    borrar = i
 
-        valAcomulado = 0
-        visitados = []
-        visitadosPr = []
-
-        ponderado = [nodoOrigen,valAcomulado]
-
-        print ''
-        print 'Algoritmo de Dijkstra...'
-        print 'Envio de nodo', VERTICES[nodoOrigen], 'a', VERTICES[nodoFin]
-        print ''
-        while (nodoOrigen is not nodoFin):
-            ponderado = [nodoOrigen, valAcomulado]
-            ponderadoPr = [VERTICES[nodoOrigen], valAcomulado]
-            print'Ponderado:', ponderadoPr
-
-            visitados.append(nodoOrigen)
-            visitadosPr.append(VERTICES[nodoOrigen])
-            print 'Nodos visitados:', visitadosPr
-
-            minAdy = min(RED[nodoOrigen])
-            print 'Valor minimo adyacente:', minAdy
-
-            nodoSiguiente = self.buscar(RED[nodoOrigen], minAdy)
-            nodoSiguientePr = VERTICES[nodoSiguiente]
-            print 'Siguiente nodo:', nodoSiguientePr
-
-            print 'Es nodo anterior igual a siguiente...' , nodoSiguientePr, '=', VERTICES[nodoOrigen]
-
-            k = self.buscarAnterior(visitados,nodoSiguiente)
-            print 'Numero de veces de visita al nodo siguiente:', k
-
-            if k>0:
-                print ''
-                print 'El nodo siguiente ya fue visitado ', k, 'veces'
-                print 'Nodo actual:', VERTICES[nodoOrigen]
-                print 'Nodo anterior:', VERTICES[nodoAnterior]
-                valAux = RED[nodoOrigen][nodoSiguiente]
-                print 'Valor de la matriz: ', valAux
-                RED[nodoOrigen][nodoAnterior] = INF
-                RED[nodoOrigen][nodoSiguiente] = INF
-                minAdy = min(RED[nodoOrigen])
-                RED[nodoOrigen][nodoAnterior] = valAux
-                print 'Nuevo valor minimo adyacente:', minAdy
-                nodoSiguiente = self.buscar(RED[nodoOrigen], minAdy)
-                nodoSiguientePr = VERTICES[nodoSiguiente]
-                print 'Siguiente nodo:', nodoSiguientePr
-                print ''
-
-            valAcomulado = valAcomulado + minAdy
-
-            ponderado = [nodoSiguiente, valAcomulado]
-            ponderadoPr = [VERTICES[nodoSiguiente], valAcomulado]
-            print 'Nuevo ponderado:', ponderadoPr
-
-            nodoAnterior = nodoOrigen
-            nodoOrigen = nodoSiguiente
-            print 'Nuevo nodo origen:', VERTICES[nodoOrigen]
-
-            print("")
-
-        print 'Nodo destino alcanzado...'
-        print 'Ponderado: ', ponderadoPr
-        print 'Nodos visitados para llegar...', visitadosPr
-
-
-    def buscar(self, lista, val):
-        for i in range(len(lista)):
-            if lista[i] == val:
-                return i
-
-    def buscarAnterior(self, lista, val):
-        j = 0
-        for i in range(len(lista)):
-            if lista[i] == val:
-                j = j + 1
-        return j
-
-    def buscarLetra(self, lista, val):
-        for i in range(len(lista)):
-            if lista[i] == val:
-                return i
+            self.etiquetas.pop(borrar)
 
 
 
 
 
 
+            print (VIS)
+            print self.definitivos
 
-
-
-
-
+            paso += 1
+            print(self.etiquetas)
+            print(distancia)
+            self.Algoritmo(min(self.etiquetas)[1], fin, distancia, paso)
 
 

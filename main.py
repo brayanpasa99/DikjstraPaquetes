@@ -11,7 +11,7 @@ def main():
     if ori.isalpha() and fin.isalpha() and not ori.isdigit() and not fin.isdigit() and ori.isupper() and fin.isupper():
 
         subCadenas = Paquetes().capturaPaquete()
-        Dijkstra(ori, fin, subCadenas).envio(ori, fin, subCadenas)
+        Dijkstra().primerPaso(ori, fin)
 
     else:
 
