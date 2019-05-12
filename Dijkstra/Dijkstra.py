@@ -32,10 +32,22 @@ class Dijkstra():
 
             menor = min(self.etiquetas)
 
+            print(ori, "NODO ORIGEN", menor[2], "OTRO NODO")
+            print("Relacion: ", RED[VER[ori]][VER[menor[2]]])
+
+            if (RED[VER[ori]][VER[menor[2]]] == INF):
+                pass
+
+
+            print(menor)
+            print(self.etiquetas)
+
             distancia += menor[0]
             VIS[menor[2]] = True
 
             self.definitivos.append(menor[2])
+
+            print(self.definitivos)
 
             veces = 0
             for i in range(0, len(self.etiquetas)):
@@ -47,5 +59,7 @@ class Dijkstra():
                 self.etiquetas.remove(borrar)
 
             paso += 1
+
+            menora = menor
 
             self.Algoritmo(menor[2], fin, distancia, paso)
