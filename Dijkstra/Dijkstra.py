@@ -42,17 +42,18 @@ class Dijkstra():
                 else:
                     self.etiquetas.append([RED[VER[ori]][i], ori, VERTICES[i]])
 
-        self.Algoritmo()
+        self.Algoritmo(fin)
 
-    def Algoritmo(self):
+    def Algoritmo(self, fin):
 
-        while self.paso<9:
+        if not VIS[fin]:
 
             print(self.etiquetas, "HOLA 3")
             menor = min(self.etiquetas)
             print(menor, "MENOR 1")
             self.distanciaActual = menor[0]
             print(self.distanciaActual, "DISTANCIA")
+            print(VIS, "VISITADOS")
             nodoActual = menor[2]
 
             for i in range(0, len(RED)):
@@ -76,28 +77,7 @@ class Dijkstra():
 
             self.paso += 1
 
-            self.Algoritmo()
+            self.Algoritmo(fin)
 
-            print (self.etiquetas, "HOLA1")
-            print (self.definitivos, "HOLA2")
-
-        '''menor = min(self.etiquetas)
-
-        distancia += menor[0]
-        VIS[menor[2]] = True
-
-        self.definitivos.append(menor[2])
-
-        print(self.definitivos)
-
-        veces = 0
-        for i in range(0, len(self.etiquetas)):
-            if self.etiquetas[i] == menor:
-                borrar = self.etiquetas[i]
-                veces += 1
-
-        for i in range(0, veces):
-            self.etiquetas.remove(borrar)
-
-        self.Algoritmo(menor[2], fin, distancia)'''
+        print(self.definitivos, self.distanciaActual)
 
