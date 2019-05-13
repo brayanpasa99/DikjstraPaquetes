@@ -24,14 +24,16 @@ VERTICES = ["1", "2", "3", "4", "5", "6"]'''
 
 
 class Dijkstra():
-    etiquetas = []
-    definitivos = []
-    distanciaActual = 0
 
     def __init__(self):
-        pass
+        for i in VIS:
+            VIS[i] = False
+        self.definitivos = []
+        self.etiquetas = []
+        self.distanciaActual = 0
 
     def nodoInicial(self, ori, fin):
+        print(VIS)
         VIS[ori] = True
         self.definitivos.append(ori)
         for i in range(0, len(RED)):
@@ -71,6 +73,18 @@ class Dijkstra():
             VIS[menor[2]] = True
 
             self.Algoritmo(fin)
+
+        print(self.definitivos)
+
+        '''for i in range(0, len(self.definitivos)-1):
+            if self.definitivos[i] != "BORRAR" and self.definitivos[i+1] != "BORRAR":
+                print(self.definitivos[i], self.definitivos[i+1])
+                if RED[VER[self.definitivos[i]]][VER[self.definitivos[i+1]]] == INF:
+                    self.definitivos[i] = "BORRAR"
+                elif RED[VER[self.definitivos[i+1]]][VER[self.definitivos[i]]] == INF:
+                    self.definitivos[i+1] = "BORRAR"
+
+            print(self.definitivos, "ESTOY  BORRANDO", i)'''
 
         print(self.distanciaActual, self.definitivos)
 
