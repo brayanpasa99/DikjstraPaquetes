@@ -26,7 +26,6 @@ VERTICES = ["1", "2", "3", "4", "5", "6"]'''
 class Dijkstra():
     etiquetas = []
     definitivos = []
-    paso = 0
     distanciaActual = 0
 
     def __init__(self):
@@ -48,12 +47,8 @@ class Dijkstra():
 
         if not VIS[fin]:
 
-            print(self.etiquetas, "HOLA 3")
             menor = min(self.etiquetas)
-            print(menor, "MENOR 1")
             self.distanciaActual = menor[0]
-            print(self.distanciaActual, "DISTANCIA")
-            print(VIS, "VISITADOS")
             nodoActual = menor[2]
 
             for i in range(0, len(RED)):
@@ -75,9 +70,7 @@ class Dijkstra():
             self.definitivos.append(menor[2])
             VIS[menor[2]] = True
 
-            self.paso += 1
-
             self.Algoritmo(fin)
 
-        print(self.definitivos, self.distanciaActual)
+        print(self.distanciaActual, self.definitivos)
 
