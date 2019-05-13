@@ -11,55 +11,93 @@ VIS = {'A': False, 'B': False, 'C': False, 'D': False, 'E': False, 'F': False, '
 VER = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6}
 VERTICES = ["A", "B", "C", "D", "E", "F", "G"]
 
+'''RED = [[0, 7, 9, INF, INF, 14],
+       [7, 0, 10, 15, INF, INF],
+       [9, 10, 0, 11, INF, 2],
+       [INF, 15, 11, 0, 6, INF],
+       [INF, INF, INF, 6, 0, 9],
+       [14, INF, 2, INF, 9, 0]]
+
+VIS = {'1': False, '2': False, '3': False, '4': False, '5': False, '6': False}
+VER = {"1": 0, "2": 1, "3": 2, "4": 3, "5": 4, "6": 5}
+VERTICES = ["1", "2", "3", "4", "5", "6"]'''
+
 
 class Dijkstra():
     etiquetas = []
     definitivos = []
+    paso = 0
+    distanciaActual = 0
 
     def __init__(self):
         pass
 
-    def Algoritmo(self, ori, fin, distancia, paso):
+    def nodoInicial(self, ori, fin):
+        VIS[ori] = True
+        self.definitivos.append(ori)
+        for i in range(0, len(RED)):
+            if RED[VER[ori]][i] != INF:
+                if VIS[VERTICES[i]]:
+                    pass
+                else:
+                    self.etiquetas.append([RED[VER[ori]][i], ori, VERTICES[i]])
 
-        while paso < 3:
+        self.Algoritmo()
+
+    def Algoritmo(self):
+
+        while self.paso<9:
+
+            print(self.etiquetas, "HOLA 3")
+            menor = min(self.etiquetas)
+            print(menor, "MENOR 1")
+            self.distanciaActual = menor[0]
+            print(self.distanciaActual, "DISTANCIA")
+            nodoActual = menor[2]
 
             for i in range(0, len(RED)):
-                if RED[VER[ori]][i] != INF:
+                if RED[VER[nodoActual]][i] != INF:
                     if VIS[VERTICES[i]]:
                         pass
                     else:
-                        self.etiquetas.append([RED[VER[ori]][i]+distancia, ori, VERTICES[i]])
+                        if nodoActual == VERTICES[i]:
+                            pass
+                        else:
+                            self.etiquetas.append([RED[VER[nodoActual]][i]+self.distanciaActual, nodoActual, VERTICES[i]])
+
+            for i in range(0, len(self.etiquetas)):
+                if self.etiquetas[i][0] > self.etiquetas[i][0]+self.distanciaActual:
+                    self.etiquetas[i][0] = self.etiquetas[i][0]+self.distanciaActual
 
             menor = min(self.etiquetas)
-
-            print(ori, "NODO ORIGEN", menor[2], "OTRO NODO")
-            print("Relacion: ", RED[VER[ori]][VER[menor[2]]])
-
-            if (RED[VER[ori]][VER[menor[2]]] == INF):
-                pass
-
-
-            print(menor)
-            print(self.etiquetas)
-
-            distancia += menor[0]
+            self.etiquetas.remove(menor)
+            self.definitivos.append(menor[2])
             VIS[menor[2]] = True
 
-            self.definitivos.append(menor[2])
+            self.paso += 1
 
-            print(self.definitivos)
+            self.Algoritmo()
 
-            veces = 0
-            for i in range(0, len(self.etiquetas)):
-                if self.etiquetas[i] == menor:
-                    borrar = self.etiquetas[i]
-                    veces += 1
+            print (self.etiquetas, "HOLA1")
+            print (self.definitivos, "HOLA2")
 
-            for i in range(0, veces):
-                self.etiquetas.remove(borrar)
+        '''menor = min(self.etiquetas)
 
-            paso += 1
+        distancia += menor[0]
+        VIS[menor[2]] = True
 
-            menora = menor
+        self.definitivos.append(menor[2])
 
-            self.Algoritmo(menor[2], fin, distancia, paso)
+        print(self.definitivos)
+
+        veces = 0
+        for i in range(0, len(self.etiquetas)):
+            if self.etiquetas[i] == menor:
+                borrar = self.etiquetas[i]
+                veces += 1
+
+        for i in range(0, veces):
+            self.etiquetas.remove(borrar)
+
+        self.Algoritmo(menor[2], fin, distancia)'''
+
