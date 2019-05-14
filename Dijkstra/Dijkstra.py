@@ -76,15 +76,14 @@ class Dijkstra():
 
         print(self.definitivos)
 
-        '''for i in range(0, len(self.definitivos)-1):
+        for i in range(0, len(self.definitivos)-1):
             if self.definitivos[i] != "BORRAR" and self.definitivos[i+1] != "BORRAR":
-                print(self.definitivos[i], self.definitivos[i+1])
+                print(self.definitivos[i], self.definitivos[i+1], "DISTANCIA", RED[VER[self.definitivos[i]]][VER[self.definitivos[i+1]]])
                 if RED[VER[self.definitivos[i]]][VER[self.definitivos[i+1]]] == INF:
                     self.definitivos[i] = "BORRAR"
-                elif RED[VER[self.definitivos[i+1]]][VER[self.definitivos[i]]] == INF:
-                    self.definitivos[i+1] = "BORRAR"
+                    aux = self.definitivos[i+1]
 
-            print(self.definitivos, "ESTOY  BORRANDO", i)'''
+            print(self.definitivos, "ESTOY  BORRANDO", i)
 
-        print(self.distanciaActual, self.definitivos)
+        #print(self.distanciaActual, self.definitivos)
 
