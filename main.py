@@ -1,5 +1,4 @@
-import math
-
+import threading
 from Dijkstra.Dijkstra import Dijkstra
 from Paquetes.Paquetes import Paquetes
 
@@ -10,11 +9,17 @@ def main():
 
     if ori.isalpha() and fin.isalpha() and not ori.isdigit() and not fin.isdigit() and ori.isupper() and fin.isupper():
 
+        listaHilos = []
         subCadenas = Paquetes().capturaPaquete()
-        Dijkstra(ori, fin, subCadenas).envio(ori, fin, subCadenas)
+
+        for i in range(0, len(subCadenas)):
+            hilo = threading.Thread(target=Dijkstra().nodoInicial(ori, fin), name='hilo%s' %i)
+            listaHilos.append(hilo)
+            print 'ENVIANDO PAQUETE: ', subCadenas[i], 'NOMBRE HILO: ', hilo.name
+            hilo.start()
+            Dijkstra().variarRed()
 
     else:
-
         print("Los computadores son nombrados con letras de la A a la F")
 
 if __name__ == "__main__":
